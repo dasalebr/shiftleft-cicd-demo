@@ -16,7 +16,7 @@ steps:
     CHKP_CLOUDGUARD_SECRET: $(CHKP_CLOUDGUARD_SECRET)
   inputs:
     script: |
-      echo $CHKP_CLOUDGUARD_ID
+      echo $(CHKP_CLOUDGUARD_ID)
   displayName: 'CSPM ID'
   
 - script: echo Hello, world!
