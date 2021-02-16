@@ -51,5 +51,5 @@ jobs:
       script: |
         git clone https://github.com/chkp-rolandop/cloudguard-iac-noncompliant-terraform.git
         ls -al
-        ./shiftleft iac-assessment -p ./cloudguard-iac-noncompliant-terraform/** -r -64
+        ./shiftleft iac-assessment -p ./cloudguard-iac-noncompliant-terraform/aws/ -r -64
     displayName: 'Terraform - Code Scan'
