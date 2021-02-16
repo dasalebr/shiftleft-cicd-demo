@@ -49,7 +49,6 @@ jobs:
       CHKP_CLOUDGUARD_SECRET: $(CHKP_CLOUDGUARD_SECRET)
     inputs:
       script: |
-        docker pull vulnerables/web-dvwa
-        docker save -o web-dvwa.tar vulnerables/web-dvwa
-        ./shiftleft image-scan -j -i ./web-dvwa.tar | jq '.'
+        git clone https://github.com/chkp-rolandop/cloudguard-iac-noncompliant-terraform.git
+        ./shiftleft iac-assessment -j -p cloudguard-iac-noncompliant-terraform/ -r -64
     displayName: 'Terraform - Code Scan'
