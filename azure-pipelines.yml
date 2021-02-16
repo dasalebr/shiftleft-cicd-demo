@@ -10,19 +10,23 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+- task: DockerInstaller@0
+  inputs:
+    dockerVersion: '17.09.0-ce'
+  displayName: 'Install Docker CE'
+- task: CmdLine@2
+  inputs:
+    script: |
+      curl -G https://shiftleft-prod.s3.amazonaws.com/blades/shiftleft/bin/linux/amd64/0.0.29/shiftleft -o shiftleft
+      chmod +x shiftleft
+  displayName: 'Install ShiftLeft'
 - task: CmdLine@2
   env:
     CHKP_CLOUDGUARD_ID: $(CHKP_CLOUDGUARD_ID)
     CHKP_CLOUDGUARD_SECRET: $(CHKP_CLOUDGUARD_SECRET)
   inputs:
     script: |
-      echo $(CHKP_CLOUDGUARD_ID)
-  displayName: 'CSPM ID'
-  
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+      docker pull vulnerables/web-dvwa
+      docker save -o web-dvwa.tar vulnerables/web-dvwa
+      ./shiftleft image-scan -i ./web-dvwa.tar
+  displayName: 'Image Scan - Container Image'
