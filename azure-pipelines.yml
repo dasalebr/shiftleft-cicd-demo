@@ -17,9 +17,10 @@ steps:
 - task: CmdLine@2
   inputs:
     script: |
+      sudo apt install jq -y
       curl -G https://shiftleft-prod.s3.amazonaws.com/blades/shiftleft/bin/linux/amd64/0.0.29/shiftleft -o shiftleft
       chmod +x shiftleft
-  displayName: 'Install ShiftLeft'
+  displayName: 'Install JQ and ShiftLeft'
 - task: CmdLine@2
   env:
     CHKP_CLOUDGUARD_ID: $(CHKP_CLOUDGUARD_ID)
@@ -28,5 +29,5 @@ steps:
     script: |
       docker pull vulnerables/web-dvwa
       docker save -o web-dvwa.tar vulnerables/web-dvwa
-      ./shiftleft image-scan -i ./web-dvwa.tar
+      ./shiftleft image-scan -j -i ./web-dvwa.tar | jq '.'
   displayName: 'Image Scan - Container Image'
