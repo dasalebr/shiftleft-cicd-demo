@@ -51,7 +51,8 @@ jobs:
         git clone https://github.com/chkp-rolandop/cloudguard-iac-noncompliant-terraform.git
         ./shiftleft iac-assessment -p cloudguard-iac-noncompliant-terraform/aws/ -r -64
     displayName: 'Terraform - Code Scan'
-- job: SourceCodeScan
+
+- job: SourceCodeScanOnLinux
   pool:
     vmImage: 'ubuntu-latest'
   steps:
@@ -71,7 +72,7 @@ jobs:
         ./shiftleft code-scan -t 900 -s demo-app/
     displayName: 'SourceCode Linux - Code Scan'
 
-- job: SourceCodeScanningOnWindows
+- job: SourceCodeScanOnWindows
   pool:
     vmImage: 'windows-latest'
   steps:
